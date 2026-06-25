@@ -42,18 +42,18 @@ Chain strategy: size-exception
 ## Fase 4 — RBAC + aislamiento multi-tenant
 - [x] 4.1 Crear `roles.decorator.ts` y `roles.guard.ts`. DESVÍO: ubicados en `modules/auth/presentation/` (no en novedades) porque la autorización es compartida por novedades/auditoría/exportación. Guard = solo authz por rol (sin tocar DB).
 - [x] 4.3 Regla Colaborador=`solicitante_id` + scope por `filial_id` definida como **política pura** `novedades/domain/visibilidad.policy.ts` (+ test 5/5 verde). Núcleo multi-tenant aislado y testeable.
-- [ ] 4.2 Aplicar el scope en la query real (`novedades.repository.ts` / `auditoria.repository.ts`) → se completa en Fase 5, cuando existan esos archivos. La política ya está lista para consumirse.
+- [x] 4.2 Scope aplicado en la query real: `novedades.repository.ts` consume `scopeVisibilidadNovedades` en `listar()`. Verificado E2E: filial 2 NO ve datos de filial 1. (auditoria.repository → Fase 7)
 
 ## Fase 5 — Módulo Novedades (CRUD)
-- [ ] 5.1 Crear `crear-novedad.dto.ts`, `filtros-novedad.dto.ts`, `novedad-response.dto.ts` y `novedades.controller.ts`.
-- [ ] 5.2 Implementar `crear-novedad.use-case.ts` con estado inicial `BORRADOR` y ownership del solicitante.
-- [ ] 5.3 Implementar `listar-novedades.use-case.ts` y filtros `tipo`, `estado`, `desde`, `hasta` (rango de fechas, alineado al Anexo C).
+- [x] 5.1 Crear `crear-novedad.dto.ts`, `filtros-novedad.dto.ts`, `novedad-response.dto.ts` y `novedades.controller.ts` (con `JwtGuard` + `RolesGuard`).
+- [x] 5.2 Implementar `crear-novedad.use-case.ts`: estado inicial `BORRADOR`, `solicitante_id`/`filial_id` desde el token (no del cliente), validación fin ≥ inicio.
+- [x] 5.3 Implementar `listar-novedades.use-case.ts` con scope de visibilidad + filtros `tipo`, `estado`, `desde`, `hasta`. Verificado E2E.
 
 ## Fase 6 — Workflow de estados
-- [ ] 6.1 Crear `workflow.policy.ts` e `invalid-transition.exception.ts` como regla pura de dominio.
-- [ ] 6.2 Implementar `enviar-novedad.use-case.ts` y acción `:id/enviar` en `novedades.controller.ts`.
-- [ ] 6.3 Implementar `aprobar-novedad.use-case.ts` y `rechazar-novedad.use-case.ts` con control Supervisor.
-- [ ] 6.4 Implementar `aprobar-masivo.use-case.ts`: filtrar IDs en `PENDIENTE` de la filial del supervisor, ignorar el resto, devolver `{ procesados: number[], ignorados: number[] }`. NO reutilizar `AprobarNovedadUseCase` — ese lanza excepción en estado inválido, lo cual rompería el batch completo.
+- [x] 6.1 Crear `workflow.policy.ts` (función pura + `puedeTransicionar`) e `invalid-transition.exception.ts`. Test 9/9 verde.
+- [x] 6.2 Implementar `enviar-novedad.use-case.ts` y `POST :id/enviar` (BORRADOR→PENDIENTE, solo owner).
+- [x] 6.3 Implementar `aprobar`/`rechazar` use-cases + endpoints (`@Roles(SUPERVISOR)`, scope por filial). Acciones devuelven 200.
+- [x] 6.4 Implementar `aprobar-masivo.use-case.ts` con filter-and-skip → `{ procesados, ignorados }`. NO reutiliza el caso individual. Verificado E2E: ya-aprobada ignorada, no rompe el batch.
 
 ## Fase 7 — Auditoría
 - [ ] 7.1 Crear `auditoria.service.ts` y `auditoria.repository.ts` con `registrar(actor, accion, entidad, entidad_id, filial_id, detalle?)` — `detalle` (JSONB) guarda contexto como motivo de rechazo o IDs procesados/ignorados en el masivo.
