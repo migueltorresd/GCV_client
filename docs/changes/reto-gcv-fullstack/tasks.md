@@ -56,9 +56,9 @@ Chain strategy: size-exception
 - [x] 6.4 Implementar `aprobar-masivo.use-case.ts` con filter-and-skip → `{ procesados, ignorados }`. NO reutiliza el caso individual. Verificado E2E: ya-aprobada ignorada, no rompe el batch.
 
 ## Fase 7 — Auditoría
-- [ ] 7.1 Crear `auditoria.service.ts` y `auditoria.repository.ts` con `registrar(actor, accion, entidad, entidad_id, filial_id, detalle?)` — `detalle` (JSONB) guarda contexto como motivo de rechazo o IDs procesados/ignorados en el masivo.
-- [ ] 7.2 Invocar auditoría desde `crear-novedad`, `enviar`, `aprobar`, `rechazar` y `exportar-csv`.
-- [ ] 7.3 Crear `auditoria.controller.ts` y `filtros-auditoria.dto.ts` para `GET /auditoria` restringido a rol `RRHH` (403 para los demás) y scopiado por `filial_id` del token.
+- [x] 7.1 Crear `auditoria.service.ts` y `auditoria.repository.ts` con `registrar(...)` — `detalle` (JSONB) guarda motivo de rechazo e IDs procesados/ignorados del masivo.
+- [x] 7.2 Auditoría invocada desde `crear`, `enviar`, `aprobar`, `rechazar` y masivo (con `detalle`). (`exportar-csv` → se suma en Fase 8). Verificado: cada acción genera su rastro con actor/entidad_id/filial.
+- [x] 7.3 Crear `auditoria.controller.ts` y `filtros-auditoria.dto.ts` para `GET /auditoria` restringido a `RRHH` (403 al resto) y scopeado por `filial_id`. Verificado E2E: filtros + RBAC + multi-tenant.
 
 ## Fase 8 — Exportación CSV
 - [ ] 8.1 Implementar `exportar-csv.use-case.ts` consultando aprobadas por `filial_id` y rango.
