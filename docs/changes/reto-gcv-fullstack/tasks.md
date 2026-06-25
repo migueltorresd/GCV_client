@@ -61,8 +61,8 @@ Chain strategy: size-exception
 - [x] 7.3 Crear `auditoria.controller.ts` y `filtros-auditoria.dto.ts` para `GET /auditoria` restringido a `RRHH` (403 al resto) y scopeado por `filial_id`. Verificado E2E: filtros + RBAC + multi-tenant.
 
 ## Fase 8 — Exportación CSV
-- [ ] 8.1 Implementar `exportar-csv.use-case.ts` consultando aprobadas por `filial_id` y rango.
-- [ ] 8.2 Crear `csv-builder.service.ts` con encabezado Anexo E, `;`, UTF-8 y `Content-Disposition`.
+- [x] 8.1 Implementar `exportar-csv.use-case.ts`: solo APROBADAS de la filial + rango, audita `EXPORTAR`. (+ campo `fecha_aprobacion` agregado a la entidad — requerido por Anexo E, no estaba en Anexo A).
+- [x] 8.2 Crear `csv-builder.service.ts` + `exportacion.controller.ts` con encabezado Anexo E EXACTO, `;`, UTF-8 sin BOM y `Content-Disposition`. Verificado byte a byte + RBAC (RRHH) + multi-tenant.
 
 ## Fase 9 — Frontend
 - [x] 9.1 Crear `LoginPage.tsx`, `auth.api.ts`, `auth.store.tsx` y persistencia JWT en `localStorage`. (incluye decode de claims para UI + hint de usuarios semilla)
