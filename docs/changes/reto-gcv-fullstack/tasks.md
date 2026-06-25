@@ -29,10 +29,10 @@ Chain strategy: size-exception
 - [x] 1.4 Configurar `backend/.eslintrc.js`, `backend/.prettierrc`, `backend/tsconfig.json` y scripts npm.
 
 ## Fase 2 — Persistencia y seed
-- [ ] 2.1 Crear `filial.entity.ts` y `user.entity.ts` en `backend/src/modules/users/domain/` con relación `filial_id`.
-- [ ] 2.2 Crear `novedad.entity.ts`, `novedad-estado.enum.ts`, `auditoria.entity.ts` y `auditoria-accion.enum.ts`.
-- [ ] 2.3 Configurar `backend/src/database/data-source.ts` y migrations iniciales en `backend/src/database/migrations/`.
-- [ ] 2.4 Implementar `backend/src/database/seed/seed.ts` con 2 filiales y usuarios del Anexo B.
+- [x] 2.1 Crear `filial.entity.ts` y `user.entity.ts` en `backend/src/modules/users/domain/` con relación `filial_id` (+ `rol.enum.ts`, `supervisor_id`).
+- [x] 2.2 Crear `novedad.entity.ts`, `novedad-estado.enum.ts`, `novedad-tipo.enum.ts`, `auditoria.entity.ts` y `auditoria-accion.enum.ts`.
+- [x] 2.3 Configurar `data-source.ts` + wiring TypeORM en `AppModule`. DESVÍO: `synchronize` en dev (env `DB_SYNCHRONIZE`) en lugar de migrations — reproducibilidad inmediata; migrations quedarían para prod. Documentado como supuesto.
+- [x] 2.4 Implementar `seed.ts` con 2 filiales + 6 usuarios del Anexo B, password `Prueba2026*` en bcrypt (cost 10). Verificado contra Postgres real.
 
 ## Fase 3 — Auth + contexto de seguridad
 - [ ] 3.1 Implementar `auth.controller.ts`, `login.dto.ts`, `login.use-case.ts` y `users.repository.ts` para `/auth/login`.
