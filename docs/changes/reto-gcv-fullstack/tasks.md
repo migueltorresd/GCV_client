@@ -40,9 +40,9 @@ Chain strategy: size-exception
 - [x] 3.3 Crear `current-user.decorator.ts` que expone `sub`, `email`, `rol`, `filial_id` desde el token.
 
 ## Fase 4 — RBAC + aislamiento multi-tenant
-- [ ] 4.1 Crear `roles.decorator.ts` y `rbac.guard.ts` en `backend/src/modules/novedades/presentation/`.
-- [ ] 4.2 Aplicar scope por `filial_id` en `novedades.repository.ts` y `auditoria.repository.ts`.
-- [ ] 4.3 Forzar regla Colaborador=`solicitante_id` propio en `listar-novedades.use-case.ts` y acciones por ID.
+- [x] 4.1 Crear `roles.decorator.ts` y `roles.guard.ts`. DESVÍO: ubicados en `modules/auth/presentation/` (no en novedades) porque la autorización es compartida por novedades/auditoría/exportación. Guard = solo authz por rol (sin tocar DB).
+- [x] 4.3 Regla Colaborador=`solicitante_id` + scope por `filial_id` definida como **política pura** `novedades/domain/visibilidad.policy.ts` (+ test 5/5 verde). Núcleo multi-tenant aislado y testeable.
+- [ ] 4.2 Aplicar el scope en la query real (`novedades.repository.ts` / `auditoria.repository.ts`) → se completa en Fase 5, cuando existan esos archivos. La política ya está lista para consumirse.
 
 ## Fase 5 — Módulo Novedades (CRUD)
 - [ ] 5.1 Crear `crear-novedad.dto.ts`, `filtros-novedad.dto.ts`, `novedad-response.dto.ts` y `novedades.controller.ts`.
