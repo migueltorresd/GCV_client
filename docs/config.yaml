@@ -1,0 +1,145 @@
+# SDD Config — Reto
+# Project  : Reto Técnico Fullstack — Pista B (GCV)
+# Generated: 2026-06-24
+# Docs path: docs/  (override; artefactos openspec en docs/ en lugar de openspec/)
+
+project: Reto
+
+context: |
+  Reto técnico Fullstack — Pista B (GCV). Solución vertical de Novedades + Aprobación
+  en 16 horas efectivas. Backend NestJS modular + hexagonal liviana, Frontend React,
+  PostgreSQL vía docker-compose. RBAC con 3 roles (Colaborador, Supervisor, RR.HH.),
+  aislamiento multi-tenant por filial_id, workflow de estados controlado en servidor,
+  auditoría centralizada vía AuditoriaService, exportación CSV (Anexo E).
+  Principio rector: seguridad y reglas de negocio en backend, MUST antes que SHOULD.
+
+# ─── Stack ────────────────────────────────────────────────────────────────────
+stack:
+  backend:
+    framework: NestJS
+    language: TypeScript
+    architecture: modular + hexagonal liviana por módulo
+    layers:
+      - domain         # entidades, enums, reglas puras, políticas de transición
+      - application    # casos de uso, orquestación
+      - infrastructure # persistencia, repositorios, adaptadores
+      - presentation   # controllers, DTOs, guards, serializers
+    modules:
+      - auth
+      - users
+      - novedades
+      - auditoria
+      - exportacion
+
+  frontend:
+    framework: React
+    language: TypeScript
+    structure: features-based
+    features:
+      - auth
+      - novedades
+      - aprobaciones
+      - auditoria
+
+  database:
+    engine: PostgreSQL
+    provisioning: docker-compose
+
+  planned:
+    linter: ESLint
+    formatter: Prettier
+    test_runner: Jest   # NestJS default — se instala en Fase 10
+
+# ─── Strict TDD ───────────────────────────────────────────────────────────────
+strict_tdd: false
+strict_tdd_note: >
+  Jest no está instalado aún (sin package.json, sin código). Se habilitará en la
+  Fase 10 del IMPLEMENTATION_PLAN.md (Pruebas automatizadas). Cambiar a true cuando
+  Jest esté configurado y los primeros tests pasen.
+
+# ─── Testing capabilities ─────────────────────────────────────────────────────
+testing:
+  runner:
+    name: Jest
+    status: planned           # Fase 10
+    command: "jest"           # cuando esté instalado
+  layers:
+    unit:
+      available: false
+      planned: true
+      tool: Jest + NestJS Testing Module
+    integration:
+      available: false
+      planned: true
+      tool: Jest + supertest
+    e2e:
+      available: false
+      planned: false
+  coverage:
+    available: false
+    planned: true
+    command: "jest --coverage"
+  quality:
+    linter:
+      available: false
+      planned: true
+      tool: ESLint
+      command: "eslint . --ext .ts"
+    type_checker:
+      available: false
+      planned: true
+      tool: tsc
+      command: "tsc --noEmit"
+    formatter:
+      available: false
+      planned: true
+      tool: Prettier
+      command: "prettier --check ."
+
+# ─── Principios y convenciones ────────────────────────────────────────────────
+principles:
+  - SOLID
+  - Clean Code
+  - KISS
+  - YAGNI
+  - Separación de responsabilidades
+  - Backend-first (seguridad y reglas de negocio viven en el servidor)
+
+conventions:
+  backend:
+    - No lógica de negocio en controllers; reglas en domain o application
+    - DTOs para validar entrada y controlar salida (sin exponer campos sensibles)
+    - RBAC y scoping de tenant resueltos en backend, nunca solo en frontend
+    - AuditoriaService.registrar(...) invocado desde casos de uso o application services
+    - Transiciones de estado (BORRADOR → PENDIENTE → APROBADA|RECHAZADA) validadas en dominio
+    - filial_id como discriminador de tenant en toda query relevante
+    - Restricción adicional por solicitante_id para rol Colaborador
+  frontend:
+    - Componentes enfocados; sin duplicar reglas de negocio del backend
+    - Estado manejado con simplicidad (sin overkill de estado global)
+    - UI funcional y clara; prioridad en flujo, no en estética avanzada
+  general:
+    - Nombres claros, funciones cortas, responsabilidad única
+    - Sin patrones añadidos "porque sí"; sin abstracciones vacías
+    - MUST antes que SHOULD o COULD
+    - Toda decisión técnica importante queda documentada
+
+# ─── Registro de cambios SDD ──────────────────────────────────────────────────
+changes: []
+
+# ─── Rutas de artefactos por fase ─────────────────────────────────────────────
+phases:
+  proposal:
+    artifact: docs/changes/{change-id}/proposal.md
+  spec:
+    artifact: docs/changes/{change-id}/spec.md
+  design:
+    artifact: docs/changes/{change-id}/design.md
+  tasks:
+    artifact: docs/changes/{change-id}/tasks.md
+  apply:
+    artifact: docs/changes/{change-id}/apply.md
+  verify:
+    artifact: docs/changes/{change-id}/verify.md
+  archive:
+    destination: docs/changes/archive/{change-id}/
