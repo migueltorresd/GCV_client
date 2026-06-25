@@ -29,6 +29,9 @@ Thumbs.db
 .idea/
 *.swp
 
+# Backend vive en su propio repo (GCV_api) — no versionar acá
+backend/
+
 # Tooling interno del agente (no es parte del entregable)
 .atl/
 
