@@ -35,9 +35,9 @@ Chain strategy: size-exception
 - [x] 2.4 Implementar `seed.ts` con 2 filiales + 6 usuarios del Anexo B, password `Prueba2026*` en bcrypt (cost 10). Verificado contra Postgres real.
 
 ## Fase 3 — Auth + contexto de seguridad
-- [ ] 3.1 Implementar `auth.controller.ts`, `login.dto.ts`, `login.use-case.ts` y `users.repository.ts` para `/auth/login`.
-- [ ] 3.2 Crear `jwt-payload.interface.ts`, `jwt.strategy.ts`, `jwt.guard.ts` y wiring de `AuthModule`.
-- [ ] 3.3 Crear `current-user.decorator.ts` y tipado request para exponer `sub`, `email`, `rol`, `filial_id`.
+- [x] 3.1 Implementar `auth.controller.ts`, `login.dto.ts`, `login.use-case.ts` y `users.repository.ts` (en `UsersModule`) para `POST /auth/login`. Verificado: 200 + token, 401 inválido.
+- [x] 3.2 Crear `jwt-payload.interface.ts`, `jwt.strategy.ts`, `jwt.guard.ts` y wiring de `AuthModule` (JwtModule + PassportModule). + `enableCors()` y `ValidationPipe` global en `main.ts`.
+- [x] 3.3 Crear `current-user.decorator.ts` que expone `sub`, `email`, `rol`, `filial_id` desde el token.
 
 ## Fase 4 — RBAC + aislamiento multi-tenant
 - [ ] 4.1 Crear `roles.decorator.ts` y `rbac.guard.ts` en `backend/src/modules/novedades/presentation/`.
