@@ -5,6 +5,16 @@ Reto técnico — Pista B (Desarrollador Fullstack).
 
 > Backend en repo aparte: **GCV_api** (NestJS + PostgreSQL).
 
+## Capturas
+
+### Login
+
+![Pantalla de login](docs/screenshots/login.png)
+
+### Dashboard del colaborador
+
+![Dashboard del colaborador — Mis novedades](docs/screenshots/dashboard-colaborador.png)
+
 ## Stack
 
 - **React 18** + **Vite** + TypeScript (`strict: true`)
