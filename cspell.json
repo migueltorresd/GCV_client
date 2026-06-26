@@ -1,0 +1,32 @@
+{
+  "version": "0.2",
+  "language": "en,es",
+  "words": [
+    "neon",
+    "govtech",
+    "AGATA",
+    "ÁGATA",
+    "HackerRank",
+    "DIMARK",
+    "eyebrow",
+    "eyebrows",
+    "civic",
+    "canvases",
+    "tarjetas",
+    "colores",
+    "novedades",
+    "novedad",
+    "aprobaciones",
+    "aprobación",
+    "filial",
+    "filiales",
+    "multitenant",
+    "colaborador",
+    "supervisor",
+    "rrhh",
+    "Andinagas",
+    "RetailVertice",
+    "GCV"
+  ],
+  "ignorePaths": ["node_modules/**", "dist/**", "*.pdf"]
+}
