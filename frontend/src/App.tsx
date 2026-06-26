@@ -4,23 +4,42 @@ import { PrivateRoute } from './shared/PrivateRoute';
 import { LoginPage } from './features/auth/LoginPage';
 import { NovedadesPage } from './features/novedades/NovedadesPage';
 import { AprobacionesPage } from './features/aprobaciones/AprobacionesPage';
+import { filialDesdeEmail } from './shared/filial';
 
 function NavBar() {
   const { user, logout } = useAuth();
   if (!user) return null;
 
+  const filial = filialDesdeEmail(user.email, user.filial_id);
+
   return (
-    <nav className="nav">
-      <NavLink to="/novedades">Novedades</NavLink>
-      {user.rol === 'SUPERVISOR' && <NavLink to="/aprobaciones">Aprobaciones</NavLink>}
-      <span className="spacer" />
-      <span>
-        {user.email} · <strong>{user.rol}</strong> · filial {user.filial_id}
-      </span>
-      <button className="secondary" onClick={logout}>
-        Salir
-      </button>
-    </nav>
+    <header className="top">
+      <div className="brand">
+        <svg fill="currentColor">
+          <use href="#hand" />
+        </svg>
+        [<span className="br">GCV</span>]
+      </div>
+      <div className="tenant" style={{ borderLeftColor: filial.color }}>
+        <span className="tenant__label">Filial</span>
+        <span className="tenant__name" style={{ color: filial.color }}>
+          {filial.nombre}
+        </span>
+      </div>
+      <nav className="topnav">
+        <NavLink to="/novedades">Novedades</NavLink>
+        {user.rol === 'SUPERVISOR' && <NavLink to="/aprobaciones">Aprobaciones</NavLink>}
+      </nav>
+      <div className="userbox">
+        <div className="who">
+          <b>{user.email}</b>
+        </div>
+        <span className="rolepill">{user.rol}</span>
+        <button className="secondary btn--sm" onClick={logout}>
+          Cerrar sesión
+        </button>
+      </div>
+    </header>
   );
 }
 

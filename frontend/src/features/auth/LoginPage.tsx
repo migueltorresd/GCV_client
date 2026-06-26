@@ -33,48 +33,78 @@ export function LoginPage() {
   }
 
   return (
-    <div className="container" style={{ maxWidth: 420 }}>
-      <h1>GCV · Novedades</h1>
-      <form className="card" onSubmit={handleSubmit}>
-        <h2>Iniciar sesión</h2>
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="username"
-            required
-          />
-        </label>
-        <label style={{ display: 'block', marginTop: '0.75rem' }}>
-          Contraseña
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-            required
-          />
-        </label>
-        {error && <p className="error">{error}</p>}
-        <button type="submit" disabled={loading} style={{ marginTop: '1rem', width: '100%' }}>
-          {loading ? 'Ingresando…' : 'Ingresar'}
-        </button>
-      </form>
+    <div className="login">
+      <div className="login__brand">
+        <div className="top">
+          <svg fill="currentColor">
+            <use href="#hand" />
+          </svg>
+          [GCV]
+        </div>
+        <div>
+          <svg className="bigmark" fill="currentColor" viewBox="0 0 64 64">
+            <use href="#hand" />
+          </svg>
+          <div className="big">
+            Gestión
+            <br />
+            de novedades
+          </div>
+        </div>
+        <div className="foot">
+          Acceso interno // 3 roles
+          <br />
+          Colaborador · Supervisor · RR.HH.
+        </div>
+      </div>
 
-      <details style={{ marginTop: '1rem', fontSize: '0.8rem', color: '#555' }}>
-        <summary>Usuarios semilla (Anexo B)</summary>
-        <p style={{ margin: '0.5rem 0' }}>Contraseña para todos: <code>Prueba2026*</code></p>
-        <ul>
-          <li>carla.colaborador@and.gcv.com — COLABORADOR / Andinagas</li>
-          <li>sergio.super@and.gcv.com — SUPERVISOR / Andinagas</li>
-          <li>rocio.rrhh@and.gcv.com — RRHH / Andinagas</li>
-          <li>diego.colaborador@ret.gcv.com — COLABORADOR / RetailVertice</li>
-          <li>sandra.super@ret.gcv.com — SUPERVISOR / RetailVertice</li>
-          <li>raul.rrhh@ret.gcv.com — RRHH / RetailVertice</li>
-        </ul>
-      </details>
+      <div className="login__form">
+        <div className="inner">
+          <span className="eyebrow">// AUTENTICACIÓN</span>
+          <h2>Ingresar</h2>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Email
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="username"
+                required
+              />
+            </label>
+            <label>
+              Contraseña
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+            </label>
+            {error && <p className="error">{error}</p>}
+            <button type="submit" disabled={loading} style={{ width: '100%' }}>
+              {loading ? 'Ingresando…' : 'Ingresar →'}
+            </button>
+          </form>
+
+          <details className="seedbox">
+            <summary>Usuarios semilla (Anexo B)</summary>
+            <p>
+              Contraseña para todos: <code>Prueba2026*</code>
+            </p>
+            <ul>
+              <li>carla.colaborador@and.gcv.com — COLABORADOR / Andinagas</li>
+              <li>sergio.super@and.gcv.com — SUPERVISOR / Andinagas</li>
+              <li>rocio.rrhh@and.gcv.com — RRHH / Andinagas</li>
+              <li>diego.colaborador@ret.gcv.com — COLABORADOR / RetailVertice</li>
+              <li>sandra.super@ret.gcv.com — SUPERVISOR / RetailVertice</li>
+              <li>raul.rrhh@ret.gcv.com — RRHH / RetailVertice</li>
+            </ul>
+          </details>
+        </div>
+      </div>
     </div>
   );
 }

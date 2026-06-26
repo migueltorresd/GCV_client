@@ -46,6 +46,7 @@ export interface Novedad {
   fecha_inicio: string;
   fecha_fin: string | null;
   descripcion: string | null;
+  adjunto?: string | null;
   solicitante_id: number;
   solicitante_email?: string;
   filial_id: number;
@@ -59,6 +60,7 @@ export interface CrearNovedadInput {
   fecha_inicio: string;
   fecha_fin?: string | null;
   descripcion?: string;
+  adjunto?: string;
 }
 
 export interface FiltrosNovedad {

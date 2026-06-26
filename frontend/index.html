@@ -4,8 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GCV — Novedades</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <!-- Glyph de marca (placeholder de mano abierta). Disponible en toda la app vía <use href="#hand" />. -->
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="hand" viewBox="0 0 64 64">
+        <rect x="28" y="22" width="8" height="30" rx="4" />
+        <rect x="18" y="26" width="8" height="26" rx="4" />
+        <rect x="38" y="26" width="8" height="26" rx="4" />
+        <rect x="9" y="33" width="8" height="19" rx="4" transform="rotate(-18 13 42)" />
+        <rect x="47" y="33" width="8" height="19" rx="4" transform="rotate(18 51 42)" />
+        <rect x="14" y="44" width="36" height="16" rx="8" />
+      </symbol>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -7,6 +7,7 @@ export function NuevaNovedadForm({ onCreated }: { onCreated: () => void }) {
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
   const [descripcion, setDescripcion] = useState('');
+  const [adjunto, setAdjunto] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -27,10 +28,12 @@ export function NuevaNovedadForm({ onCreated }: { onCreated: () => void }) {
         fecha_inicio: fechaInicio,
         fecha_fin: fechaFin || null,
         descripcion: descripcion || undefined,
+        adjunto: adjunto || undefined,
       });
       setFechaInicio('');
       setFechaFin('');
       setDescripcion('');
+      setAdjunto('');
       onCreated();
     } catch {
       setError('No se pudo crear la novedad.');
@@ -40,9 +43,11 @@ export function NuevaNovedadForm({ onCreated }: { onCreated: () => void }) {
   }
 
   return (
-    <form className="card" onSubmit={handleSubmit} style={{ marginBottom: '1.5rem' }}>
-      <h3>Nueva novedad</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+    <form className="card" onSubmit={handleSubmit}>
+      <span className="tag" style={{ color: 'var(--lime)', display: 'block', marginBottom: '1rem' }}>
+        // NUEVA NOVEDAD
+      </span>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
         <label>
           Tipo
           <select value={tipo} onChange={(e) => setTipo(e.target.value as TipoNovedad)}>
@@ -63,12 +68,19 @@ export function NuevaNovedadForm({ onCreated }: { onCreated: () => void }) {
           <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
         </label>
       </div>
-      <label style={{ display: 'block', marginTop: '0.75rem' }}>
+      <label style={{ marginTop: '1rem' }}>
         Descripción
         <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} rows={2} />
       </label>
+      <label style={{ marginTop: '1rem' }}>
+        Adjunto (opcional)
+        <input type="file" onChange={(e) => setAdjunto(e.target.files?.[0]?.name ?? '')} />
+      </label>
+      <small className="mono">
+        Solo se registra el nombre del archivo — el almacenamiento real está fuera de alcance.
+      </small>
       {error && <p className="error">{error}</p>}
-      <button type="submit" disabled={loading} style={{ marginTop: '0.75rem' }}>
+      <button type="submit" disabled={loading} style={{ marginTop: '1rem' }}>
         {loading ? 'Guardando…' : 'Crear (BORRADOR)'}
       </button>
     </form>
