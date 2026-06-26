@@ -70,11 +70,17 @@ Chain strategy: size-exception
 - [x] 9.3 Implementar `NovedadesPage.tsx`, `NuevaNovedadForm.tsx` y `novedades.api.ts` con filtros (`tipo`, `estado`, `desde`, `hasta`), alta, enviar y export CSV (RRHH).
 - [x] 9.4 Implementar `AprobacionesPage.tsx` y `aprobaciones.api.ts` con checkboxes, aprobación masiva (`{ procesados, ignorados }`), aprobar y rechazar individual.
 
-## Fase 10 — Pruebas
-- [ ] 10.1 Crear `workflow.policy.spec.ts` con transiciones válidas e inválidas del spec `workflow-estados`.
-- [ ] 10.2 Crear test integración multi-tenant para filial A/B sobre `GET /novedades`.
-- [ ] 10.3 Crear test integración intra-filial donde un Colaborador no ve novedades de otro.
-- [ ] 10.4 Opcional: agregar test de `aprobar-masivo` ignorando IDs ya aprobados.
+## Fase 10 — Pruebas (35 tests automatizados, 10 suites)
+- [x] 10.1 `workflow.policy.spec.ts` — transiciones válidas e inválidas (9 casos).
+- [x] 10.2 Aislamiento multi-tenant: cubierto por `visibilidad.policy.spec.ts` (regla pura) + validación E2E (curl filial A vs B). NOTA: la integración es E2E manual, no `supertest` automatizado.
+- [x] 10.3 Intra-filial: `visibilidad.policy.spec.ts` prueba que el scope de un Colaborador excluye novedades ajenas de su filial.
+- [x] 10.4 `aprobar-masivo.use-case.spec.ts` — filter-and-skip ignorando no-PENDIENTE. + tests de login, crear, enviar, aprobar, rechazar, listar y CSV builder.
 
 ## Fase 11 — README y documentación final
-- [ ] 11.1 Redactar `README.md` con instalación, ejecución, decisiones, supuestos, MoSCoW y tiempo invertido.
+- [x] 11.1 README final en ambos repos (instalación, supuestos, MoSCoW, tiempo por componente) + `backend/DECISIONES.md` (9 ADRs).
+
+---
+
+## Post-plan (hardening + cierre)
+- [x] Hardening de seguridad OWASP (JWT secret fail-fast, CORS allowlist, helmet, rate limit, synchronize seguro, multer parcheado). Skill `owasp-top-10` + reglas de arquitectura en `.claude/`.
+- [x] Campo `adjunto` opcional en novedades (RT-04) — referencia/nombre, sin storage real (COULD).
